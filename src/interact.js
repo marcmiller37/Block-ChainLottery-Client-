@@ -2,8 +2,8 @@ import MarcCoin from './contracts/MarcCoin.json';
 import { ethers } from 'ethers';
 
 const contractABI = MarcCoin.abi;
-const contractAddress = "0xde40a751d4B9dCB517E786Ccdb743956825e6dBF";
-const ownerAddress = "0x80AA2A78E9b9448a41014EaaD18273De53e03186";
+export const contractAddress = "0xCeb6B6afc5e25a7A2914fB9Ea505C28d09779914";
+export const ownerAddress = "0x79e8A01DDDfCC99Ec4C7dA3b2cF75bCD60A7ACd6";
 
 
 export async function initializeProvider() {
@@ -24,6 +24,21 @@ export async function initializeProvider() {
     }
 };
 
+  export const loadCurrentWalletBalance = async (walletAddress, status) => { 
+    if (typeof window.ethereum !== 'undefined') {
+      const marcCoinContract = await initializeProvider();
+      try {
+        const balance = await marcCoinContract.balanceOf(walletAddress); 
+        if(balance > 0){
+          return {newStatus: "❌ Sorry you have already purchased a MarcCoin. Please do not attempt to purchase another and let someone else have a chance at the lottery!", balance: balance};
+        }
+        return {newStatus: status, balance: balance};
+      } catch (e) {
+        console.log('error fetching total coin balance: ', e);
+      }
+    }
+};
+
 export const connectWallet = async () => {
   if (window.ethereum) {
     try {
@@ -31,7 +46,7 @@ export const connectWallet = async () => {
         method: "eth_requestAccounts",
       });
       const obj = {
-        status: "👆🏽 Write a message in the text-field above.",
+        status: "👇 Try to connect wallet if it is not connected.",
         address: addressArray[0],
       };
       return obj;
@@ -69,7 +84,8 @@ export const getCurrentWalletConnected = async () => {
       if (addressArray.length > 0) {
         return {
           address: addressArray[0],
-          status: "👆🏽 Write a message in the text-field above.",
+          status: "👆🏽 Wallet is connected. Purchase a ticket?",
+          addressToUse: undefined
         };
       } else {
         return {
@@ -112,10 +128,6 @@ export const purchaseMarcCoin = async (address) => {
   }
   const marcCoinContract = await initializeProvider();
   const lotteryBalance = await marcCoinContract.balanceOf(ownerAddress); 
-  // debug code
-  if(lotteryBalance < 1000){
-    await marcCoinContract.transferFrom(address, ownerAddress, 1);
-  }
   const currentBalance = await marcCoinContract.balanceOf(address); 
   console.log("Current balance: " + currentBalance);
   if (lotteryBalance === 0) {

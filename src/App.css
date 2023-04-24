@@ -28,6 +28,11 @@
   color: #61dafb;
 }
 
+button:disabled{
+  background-color: #282c34;
+  color: #666666;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
