@@ -1,70 +1,87 @@
-# Getting Started with Create React App
+# Block Chain Lottery Client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React front-end for a blockchain-based lottery built for **UNR CS705**. Users connect with MetaMask, purchase MarcCoin (lottery tickets), and play the lottery by guessing a number. The winner receives a gift card via an encrypted link.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Wallet connection** — Connect via MetaMask to an Ethereum-compatible network
+- **Purchase lottery tickets** — Buy one MarcCoin token per address (one ticket per day until someone wins or tickets run out)
+- **Play the lottery** — Enter a number between 0 and 20 and submit to play
+- **Test accounts** — Pre-funded test addresses and keys are suggested for users without a wallet (import into MetaMask for the test network)
 
-### `npm start`
+## Prerequisites
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Node.js** (v14 or later) and npm
+- **MetaMask** (or another Web3 wallet) in your browser
+- Access to the network where the MarcCoin contract is deployed (contract address is set in the client)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Tech Stack
 
-### `npm test`
+- **React** 18 (Create React App)
+- **ethers.js** 5.7 — Ethereum wallet and contract interaction
+- **MarcCoin** smart contract — ERC-20–style token and lottery logic
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Getting Started
 
-### `npm run build`
+### Install dependencies
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm install
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Run the app
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+npm start
+```
 
-### `npm run eject`
+Open [http://localhost:3000](http://localhost:3000). The app will reload when you edit files.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Build for production
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+npm run build
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Output is in the `build` folder, ready to deploy.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Run tests
 
-## Learn More
+```bash
+npm test
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## How to Use
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. **Install MetaMask** — [metamask.io/download](https://metamask.io/download) if you don’t have it.
+2. **Connect wallet** — Click “Connect Wallet” and approve the connection in MetaMask. Ensure you’re on the correct network (the one where the MarcCoin contract is deployed).
+3. **Purchase a ticket** — Click “Purchase MarcCoin” to receive one lottery ticket (one per address). The button is disabled after you already have a ticket.
+4. **Play the lottery** — Enter a number between 0 and 20 and click “Attempt Lottery.” Wait for the transaction to confirm.
+5. **Test without a wallet** — Use one of the suggested test address and private key, import the key into MetaMask, then connect and use the app as above.
 
-### Code Splitting
+## Project Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```
+src/
+├── App.js           # Root component, renders MarcCoin
+├── MarcCoin.js      # Main UI: wallet, purchase, lottery, test-account hints
+├── interact.js      # Web3: contract init, wallet connect, balance, purchase
+├── contracts/
+│   └── MarcCoin.json  # Contract ABI
+└── ...
+```
 
-### Analyzing the Bundle Size
+Contract address and owner address are configured in `src/interact.js`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Scripts
 
-### Making a Progressive Web App
+| Command        | Description                    |
+|----------------|--------------------------------|
+| `npm start`    | Development server (port 3000) |
+| `npm run build`| Production build               |
+| `npm test`     | Run tests                      |
+| `npm run eject`| Eject CRA (one-way; not recommended) |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## License
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Private — UNR CS705 project.
